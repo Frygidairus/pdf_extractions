@@ -1,7 +1,7 @@
-import fitz  # PyMuPDF
+import pymupdf  # PyMuPDF
 
 def extract_clean_text(pdf_path):
-    doc = fitz.open(pdf_path)
+    doc = pymupdf.open(pdf_path)
     extracted_text = []
 
     for page in doc:
