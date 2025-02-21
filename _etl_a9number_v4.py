@@ -1,6 +1,7 @@
 import cProfile
+from pdftextractor import extract_text
 
-
+path_to_pdf = "./etl_sample.pdf"
 """In order to run the tests simply run
 
 python -m pytest _etl_a9number_v4.py
@@ -127,7 +128,7 @@ Don't be left unprotected. Order your don SSSS3000 today!"""
 
 
 # TODO 1: the text extracted from the PDF needs to be added inside this constant
-SAMPLE_TEXT_FOR_BENCH = ""
+SAMPLE_TEXT_FOR_BENCH = extract_text(path_to_pdf)
 
 
 def doit():
