@@ -3,6 +3,7 @@ from pdftextractor import extract_text
 import re
 
 path_to_pdf = "./etl_sample.pdf"
+
 """In order to run the tests simply run
 
 python -m pytest _etl_a9number_v4.py
