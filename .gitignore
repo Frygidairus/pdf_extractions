@@ -2,3 +2,4 @@ venv
 .DS_Store
 extraction_test.txt
 __pycache__
+.pytest_cache
