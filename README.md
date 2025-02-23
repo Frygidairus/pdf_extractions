@@ -27,9 +27,19 @@ The first mission given is write a script allowing the text extraction from the 
 Accuracy is important as, in a second time, the text extrated is used in mission 2 as text input for the unitary tests.
 
 ## Current State
+The current _extract_text()_ script make use of the [PyMuPdf](https://pymupdf.readthedocs.io/en/latest/) library. 
+
+It reads and extracts the text from the .pdf file given as argument.
+The script then splits the text on all newline markers (\n) and removes all lines starting by "Figure" and the lines being digits.
+Then all the lines are joined, followed by the pages being joined altogether. 
+Finally spaces are added after punctuation in order to improve readability.
+
+**NB.** _LIGATURES:_ It worth noting that the flags in the _get_text()_ method are modified in order to remove ligatures. By default, PyMuPdf keeps ligatures as in the PDF. For instance, the ligature "ﬀ" would be kept as is in the extracted text instead of "ff", potentially leading to processing issues after extraction.
 
 ## Possible Improvements?
+The _extract_text()_ script could possibly be improved by reducing the overhead induced by the library. PyMuPdf has a lot to offer and offers a lot of features yet, in this particular case, only the _get_text()_ method is used for each page. It could be possible to have a lower access to the text in order to gain in performance.
 
+Making use of publicly available **LLMs** such as [OpenAI's models](https://platform.openai.com/docs/models) or [Google's models](https://ai.google.dev/gemini-api/docs/models/gemini) throught respective API could help improve accuracy. This has the downsides of **adding costs** depending on the number of PDF files processed as well as probably **reducing overall performances**. It relies also on a third party, possibly raising **reliability concerns**.
 # Mission 2: count_occurrences_in_text()
 
 ## Current State
