@@ -30,8 +30,10 @@ def count_occurrences_in_text(word: str, text:str) -> int:
     word = word.lower()
     text = text.lower()
 
-    # Use re.finditer() to find matches more efficiently
-    return sum(1 for _ in re.finditer(rf"(?<![\w'])[\W_]*{re.escape(word)}[\W_]*(?![\w'])", text))
+    # Compile the regex
+    regex = re.compile(rf"(?<![\w'])[\W_]*{re.escape(word)}[\W_]*(?![\w'])")
+    # Use regex.finditer() to find matches and sum them
+    return sum(1 for _ in regex.finditer(text))
 
 def test_count_occurrences_in_text():
     text = """Georges is my name and I like python. Oh ! your name is georges? And you like Python!
