@@ -1,10 +1,8 @@
 import cProfile
 from pdftextractor import extract_text
 import re
-import nltk
 
 path_to_pdf = "./etl_sample.pdf"
-nltk.download('punkt_tab')
 
 """In order to run the tests simply run
 
@@ -17,19 +15,11 @@ def count_occurrences_in_text(word, text):
     """
     Return the number of occurrences of the passed word (case insensitive) in text
     """
-    counter = 0
+    word = word.lower()
+    text = text.lower()
 
-    text = re.sub(r"(?<=[.!?])(?=[A-Z])", "" , text)
-
-    sentences = nltk.tokenize.sent_tokenize(text)
-    #print(sentences)
-
-    for sentence in sentences:
-        # use re.IGNORECASE to make the function case insensitive
-        counter += len(re.findall(rf"(?<![\w'])[\W_]*{re.escape(word)}[\W_]*(?![\w'])", sentence, re.IGNORECASE))
-    
-    return counter
-    #return len(re.findall(rf"(?<![\w'])[\W_]*{re.escape(word)}[\W_]*(?![\w'])", text, re.IGNORECASE))
+    # Use re.finditer() to find matches efficiently
+    return sum(1 for _ in re.finditer(rf"(?<![\w'])[\W_]*{re.escape(word)}[\W_]*(?![\w'])", text))
 
 def test_count_occurrences_in_text():
     text = """Georges is my name and I like python. Oh ! your name is georges? And you like Python!
