@@ -6,9 +6,12 @@ def extract_text(path_to_pdf):
     pdf = pymupdf.open(path_to_pdf)
     extracted_text = []
 
+    # keep all the default flags for the text extraction except for the ligatures flag (ie. 'ff' 'ffi'... as one character)
+    flags = pymupdf.TEXT_PRESERVE_WHITESPACE | pymupdf.TEXT_MEDIABOX_CLIP | pymupdf.TEXT_CID_FOR_UNKNOWN_UNICODE
+
     for page in pdf:
 
-        text = page.get_text("text")  # Extract text as plain text with line breaks
+        text = page.get_text(flags=flags)  # Extract text as plain text with line breaks
         lines = text.split("\n")  # Split into lines for easier processing
         cleaned_lines = []
 

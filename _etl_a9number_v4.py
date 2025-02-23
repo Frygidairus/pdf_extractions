@@ -3,6 +3,7 @@ from pdftextractor import extract_text
 import re
 
 path_to_pdf = "./etl_sample.pdf"
+
 """In order to run the tests simply run
 
 python -m pytest _etl_a9number_v4.py
@@ -14,24 +15,11 @@ def count_occurrences_in_text(word, text):
     """
     Return the number of occurrences of the passed word (case insensitive) in text
     """
-
-    # TODO 2: your code goes here, but it's OK to add new functions or import modules if needed
-
-    counter = 0
-
-    # use lowercase for the word and the text to make the function case insensitive
     word = word.lower()
     text = text.lower()
 
-    # split the text on punctuation marks
-    #text = re.split('[?.,]' ,text)
-
-    #for subtext in text:
-    counter = len(re.findall(rf"(?<![\w'])[\W_]*{re.escape(word)}[\W_]*(?![\w'])", text))
-
-    # This does not pass the unittests:
-    return counter
-
+    # Use re.finditer() to find matches efficiently
+    return sum(1 for _ in re.finditer(rf"(?<![\w'])[\W_]*{re.escape(word)}[\W_]*(?![\w'])", text))
 
 def test_count_occurrences_in_text():
     text = """Georges is my name and I like python. Oh ! your name is georges? And you like Python!
