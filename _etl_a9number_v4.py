@@ -2,7 +2,7 @@ import cProfile
 from pdftextractor import extract_text
 import re
 
-path_to_pdf = "./etl_sample.pdf"
+PATH_TO_PDF = "./etl_sample.pdf"
 
 """In order to run the tests simply run
 
@@ -11,14 +11,26 @@ python -m pytest _etl_a9number_v4.py
 In order to see the profiling, you need to add the option -s
 """
 
-def count_occurrences_in_text(word, text):
+def count_occurrences_in_text(word: str, text:str) -> int:
     """
-    Return the number of occurrences of the passed word (case insensitive) in text
+    Count the number of occurrences of a specific word in a given text, case-insensitively.
+
+    The function ensures that only whole word matches are counted, avoiding partial matches
+    within other words. It uses regular expressions to identify word boundaries while 
+    allowing for punctuation and special characters around the word.
+
+    Args:
+        word (str): The word to count occurrences of.
+        text (str): The text in which to search for the word.
+
+    Returns:
+        int: The number of times the word appears in the text as a standalone word.
     """
+    # Use lower case for the word and the text in order to make the function case insensitive
     word = word.lower()
     text = text.lower()
 
-    # Use re.finditer() to find matches efficiently
+    # Use re.finditer() to find matches more efficiently
     return sum(1 for _ in re.finditer(rf"(?<![\w'])[\W_]*{re.escape(word)}[\W_]*(?![\w'])", text))
 
 def test_count_occurrences_in_text():
@@ -128,8 +140,8 @@ Don't be left unprotected. Order your don SSSS3000 today!"""
     assert 1 == count_occurrences_in_text("Linguist", "'''''Linguist Specialist Found Dead on Laboratory Floor'''''")
 
 
-# TODO 1: the text extracted from the PDF needs to be added inside this constant
-SAMPLE_TEXT_FOR_BENCH = extract_text(path_to_pdf)
+# The text extracted from the sample PDF is added inside this constant
+SAMPLE_TEXT_FOR_BENCH = extract_text(PATH_TO_PDF)
 
 
 def doit():
