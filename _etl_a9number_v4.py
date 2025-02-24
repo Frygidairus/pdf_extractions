@@ -2,6 +2,7 @@ import cProfile
 from pdftextractor import extract_text
 import re
 
+_cache ={}
 path_to_pdf = "./etl_sample.pdf"
 
 """In order to run the tests simply run
@@ -13,13 +14,19 @@ In order to see the profiling, you need to add the option -s
 
 def count_occurrences_in_text(word, text):
     """
-    Return the number of occurrences of the passed word (case insensitive) in text
+    Return the number of occurrences of the passed word (case insensitive) in text.
+    Uses a manual dictionary-based cache.
     """
+    key = (word.lower(), text)  # Use a tuple as the cache key
+    if key in _cache:
+        return _cache[key]
+
     word = word.lower()
     text = text.lower()
+    count = sum(1 for _ in re.finditer(rf"(?<![\w'])[\W_]*{re.escape(word)}[\W_]*(?![\w'])", text))
 
-    # Use re.finditer() to find matches efficiently
-    return sum(1 for _ in re.finditer(rf"(?<![\w'])[\W_]*{re.escape(word)}[\W_]*(?![\w'])", text))
+    _cache[key] = count  # Store in cache
+    return count
 
 def test_count_occurrences_in_text():
     text = """Georges is my name and I like python. Oh ! your name is georges? And you like Python!
