@@ -4,7 +4,7 @@ import re
 
 
 _cache ={}
-path_to_pdf = "./etl_sample.pdf"
+PATH_TO_PDF = "./etl_sample.pdf"
 
 
 
