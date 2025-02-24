@@ -2,7 +2,11 @@ import cProfile
 from pdftextractor import extract_text
 import re
 
-PATH_TO_PDF = "./etl_sample.pdf"
+
+_cache ={}
+path_to_pdf = "./etl_sample.pdf"
+
+
 
 """In order to run the tests simply run
 
@@ -28,12 +32,15 @@ def count_occurrences_in_text(word: str, text:str) -> int:
     """
     # Use lower case for the word and the text in order to make the function case insensitive
     word = word.lower()
+    key = (word, text)  # Use a tuple as the cache key
+    if key in _cache:
+        return _cache[key]
+      
     text = text.lower()
+    count = sum(1 for _ in re.finditer(rf"(?<![\w'])[\W_]*{re.escape(word)}[\W_]*(?![\w'])", text))
 
-    # Compile the regex
-    regex = re.compile(rf"(?<![\w'])[\W_]*{re.escape(word)}[\W_]*(?![\w'])")
-    # Use regex.finditer() to find matches and sum them
-    return sum(1 for _ in regex.finditer(text))
+    _cache[key] = count  # Store in cache
+    return count
 
 def test_count_occurrences_in_text():
     text = """Georges is my name and I like python. Oh ! your name is georges? And you like Python!
