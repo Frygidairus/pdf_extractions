@@ -1,1 +1,4 @@
 pymupdf
+
+# Optional but useful to test multiple times the files.
+pytest-benchmark
