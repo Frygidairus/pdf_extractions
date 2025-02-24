@@ -22,6 +22,7 @@ def count_occurrences_in_text(word: str, text:str) -> int:
     The function ensures that only whole word matches are counted, avoiding partial matches
     within other words. It uses regular expressions to identify word boundaries while 
     allowing for punctuation and special characters around the word.
+    The function caches results for better performances on repeated calls
 
     Args:
         word (str): The word to count occurrences of.
