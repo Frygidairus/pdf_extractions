@@ -1,6 +1,6 @@
 # Introduction
 
-This repository is part of my application as **Data Engineer** at _Aimigo_ (ex- _Gymglish_) and <mark style="background-color: red">should be kept private</mark>.
+This repository is part of my application as **Data Engineer** at _Aimigo_ (ex- _Gymglish_).
 
 It should be assessed by the _Aimigo_ team on two main objectives:
 - Cleaness
